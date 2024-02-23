@@ -8,7 +8,6 @@ This project is a desktop application with modern look, enabling a company to ma
 - Services: Implements operational logic using DAO functions
 - Security: Using the SHA-256 algorithm for hashing
 - Dependency Management: Maven is used to manage dependencies
-----------
 
 ## GIF and Images
 
