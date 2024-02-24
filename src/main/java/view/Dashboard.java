@@ -6,7 +6,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import dao.*;
-import service.*;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
@@ -21,9 +21,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.*;
+import service.DisplayService;
+import service.tableconfigs.*;
 import view.operations.*;
 
 public class Dashboard extends javax.swing.JFrame {
+    
    
     public Dashboard() {
         initComponents();
@@ -39,12 +43,12 @@ public class Dashboard extends javax.swing.JFrame {
     
     private void handleSelectedItem(String selectedItem) {
         switch (selectedItem) {
-            case "Customers"    -> new CustomerDisplayService().displayData(new CustomerDAO().getAll(), table);
-            case "Products"     -> new ProductDisplayService().displayData(new ProductDAO().getAll(), table);
-            case "Orders"       -> new OrderDisplayService().displayData(new OrderDAO().getAll(), table);
-            case "Purchase"     -> new PurchaseDisplayService().displayData(new PurchaseDAO().getAll(), table);
-            case "Employees"    -> new EmployeeDisplayService().displayData(new EmployeeDAO().getAll(), table);
-            case "Offices"      -> new OfficeDisplayService().displayData(new OfficeDAO().getAll(), table);
+            case "Customers"    -> new DisplayService<Customer>().displayData(new CustomerDAO().getAll(), table, new CustomerTableConfig());
+            case "Products"     -> new DisplayService<Product>().displayData(new ProductDAO().getAll(), table, new ProductTableConfig());
+            case "Orders"       -> new DisplayService<Order>().displayData(new OrderDAO().getAll(), table, new OrderTableConfig());
+            case "Purchase"     -> new DisplayService<Purchase>().displayData(new PurchaseDAO().getAll(), table, new PurchaseTableConfig());
+            case "Employees"    -> new DisplayService().displayData(new EmployeeDAO().getAll(), table, new EmployeeTableConfig());
+            case "Offices"      -> new DisplayService().displayData(new OfficeDAO().getAll(), table, new OfficeTableConfig());
         }
     }
     
@@ -200,6 +204,12 @@ public class Dashboard extends javax.swing.JFrame {
 
     private static DefaultTableModel model;
     
+    public static DefaultTableModel getModel() {
+        if (model == null)
+            return new DefaultTableModel();
+        return model;
+    }
+    
     public static void setModel(DefaultTableModel model) {
         Dashboard.model = model;
     }
@@ -295,7 +305,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void displayInitialData() {
-        new CustomerDisplayService().displayData(new CustomerDAO().getAll(), table);
+        new DisplayService<Customer>().displayData(new CustomerDAO().getAll(), table, new CustomerTableConfig());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
