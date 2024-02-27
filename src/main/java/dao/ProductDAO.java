@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Product;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class ProductDAO implements DAO<Product> {
 
@@ -19,12 +20,7 @@ public class ProductDAO implements DAO<Product> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                products.add(new Product(
-                        resultSet.getInt("productCode"),
-                        resultSet.getString("productName"),
-                        resultSet.getString("manufacturer"),
-                        resultSet.getInt("quantityInStock"),
-                        resultSet.getFloat("buyPrice")));
+                products.add(ResultSetMapper.mapToProduct(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();

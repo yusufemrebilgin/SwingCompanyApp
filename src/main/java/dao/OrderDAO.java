@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Order;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class OrderDAO implements DAO<Order> {
 
@@ -19,13 +20,7 @@ public class OrderDAO implements DAO<Order> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                orders.add(new Order(
-                        resultSet.getInt("orderId"),
-                        resultSet.getDate("orderDate"),
-                        resultSet.getDate("estimatedDate"),
-                        resultSet.getDate("shippedDate"),
-                        resultSet.getString("status"),
-                        resultSet.getInt("customerId")));
+                orders.add(ResultSetMapper.mapToOrder(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();

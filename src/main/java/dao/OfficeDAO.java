@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Office;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class OfficeDAO implements DAO<Office> {
 
@@ -19,10 +20,7 @@ public class OfficeDAO implements DAO<Office> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                offices.add(new Office(
-                        resultSet.getInt("officeCode"),
-                        resultSet.getString("officeAddress"),
-                        resultSet.getString("officePhoneNumber")));
+                offices.add(ResultSetMapper.mapToOffice(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();

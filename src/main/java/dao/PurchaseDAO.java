@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Purchase;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class PurchaseDAO implements DAO<Purchase> {
 
@@ -19,10 +20,7 @@ public class PurchaseDAO implements DAO<Purchase> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                purchases.add(new Purchase(
-                        resultSet.getInt("customerId"),
-                        resultSet.getFloat("totalAmount"),
-                        resultSet.getDate("purchaseDate")));
+                purchases.add(ResultSetMapper.mapToPurchase(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();

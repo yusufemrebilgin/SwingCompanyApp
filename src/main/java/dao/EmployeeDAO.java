@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Employee;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class EmployeeDAO implements DAO<Employee> {
 
@@ -19,15 +20,7 @@ public class EmployeeDAO implements DAO<Employee> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                employees.add(new Employee(
-                        resultSet.getInt("employeeId"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getString("email"),
-                        resultSet.getString("phoneNumber"),
-                        resultSet.getString("jobTitle"),
-                        resultSet.getDate("startDate"),
-                        resultSet.getInt("officeCode")));
+                employees.add(ResultSetMapper.mapToEmployee(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Customer;
 import util.DbHelper;
+import util.ResultSetMapper;
 
 public class CustomerDAO implements DAO<Customer> {
 
@@ -19,16 +20,7 @@ public class CustomerDAO implements DAO<Customer> {
              ResultSet resultSet = statement.executeQuery()) {
             
             while (resultSet.next()) {
-                customers.add(new Customer(
-                        resultSet.getInt("customerId"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getString("email"),
-                        resultSet.getString("phoneNumber"),
-                        resultSet.getString("address"),
-                        resultSet.getString("city"),
-                        resultSet.getString("country"),
-                        resultSet.getInt("postalCode")));
+                customers.add(ResultSetMapper.mapToCustomer(resultSet));
             }     
         } catch (SQLException exception) {
             exception.printStackTrace();
