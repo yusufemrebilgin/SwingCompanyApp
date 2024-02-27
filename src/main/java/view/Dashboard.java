@@ -47,8 +47,8 @@ public class Dashboard extends javax.swing.JFrame {
             case "Products"     -> new DisplayService<Product>().displayData(new ProductDAO().getAll(), table, new ProductTableConfig());
             case "Orders"       -> new DisplayService<Order>().displayData(new OrderDAO().getAll(), table, new OrderTableConfig());
             case "Purchase"     -> new DisplayService<Purchase>().displayData(new PurchaseDAO().getAll(), table, new PurchaseTableConfig());
-            case "Employees"    -> new DisplayService().displayData(new EmployeeDAO().getAll(), table, new EmployeeTableConfig());
-            case "Offices"      -> new DisplayService().displayData(new OfficeDAO().getAll(), table, new OfficeTableConfig());
+            case "Employees"    -> new DisplayService<Employee>().displayData(new EmployeeDAO().getAll(), table, new EmployeeTableConfig());
+            case "Offices"      -> new DisplayService<Office>().displayData(new OfficeDAO().getAll(), table, new OfficeTableConfig());
         }
     }
     
